@@ -18,6 +18,10 @@
   }
 }
 
+.Logo {
+  height: 11%;
+}
+
 .Open {
   transform: translateX(0)
 }
