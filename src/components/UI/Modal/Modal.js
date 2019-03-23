@@ -7,7 +7,7 @@ class Modal extends React.Component {
   /** it will only execute if the child componenet show gets true/change */
   shouldComponentUpdate(nextProps, nextState) {
     console.log(this.props)
-    return nextProps.show !== this.props.show
+    return nextProps.show !== this.props.show || nextProps.children !== this.props.children
   }
 
   componentWillUpdate() {
