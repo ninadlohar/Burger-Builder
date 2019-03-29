@@ -3,6 +3,7 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.css";
 import axios from "../../../axios";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 
 class ContactData extends React.Component {
   state = {
@@ -44,26 +45,30 @@ class ContactData extends React.Component {
   render() {
     let form = (
       <form>
-        <input
+        <Input
           className={classes.Input}
+          inputtype="input"
           type="text"
           name="name"
           placeholder="Your Name"
         />
-        <input
+        <Input
           className={classes.Input}
+          inputtype="input"
           type="email"
           name="email"
           placeholder="Your Email"
         />
-        <input
+        <Input
           className={classes.Input}
+          inputtype="input"
           type="text"
           name="street"
           placeholder="Your Street"
         />
-        <input
+        <Input
           className={classes.Input}
+          inputtype="input"
           type="text"
           name="postalCode"
           placeholder="Your PostalCode"
