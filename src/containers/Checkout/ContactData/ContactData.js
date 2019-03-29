@@ -83,10 +83,13 @@ class ContactData extends React.Component {
             { value: "cheapest", displayValue: "Cheapest" }
           ]
         },
-        value: ""
+        value: "",
+        valid: true,
+        validation: {}
       }
     },
-    loading: false
+    loading: false,
+    formIsValid: false
   };
 
   orderHandler = e => {
@@ -136,7 +139,11 @@ class ContactData extends React.Component {
     );
     updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    this.setState({ orderForm: updatedOrderForm });
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
   render() {
@@ -163,7 +170,11 @@ class ContactData extends React.Component {
             />
           );
         })}
-        <Button btnType="Success" clicked={this.orderHandler}>
+        <Button
+          disabled={!this.state.formIsValid}
+          btnType="Success"
+          clicked={this.orderHandler}
+        >
           ORDER
         </Button>
       </form>
