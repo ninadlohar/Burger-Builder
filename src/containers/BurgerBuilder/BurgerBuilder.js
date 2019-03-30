@@ -12,7 +12,6 @@ import WithErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 class BurgerBuilder extends React.Component {
   state = {
-    purchasable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -36,7 +35,7 @@ class BurgerBuilder extends React.Component {
       .reduce((s, el) => {
         return s + el;
       }, 0);
-    this.setState({ purchasable: sum > 0 });
+    return sum > 0;
   }
 
   purchaseHandler = () => {
@@ -85,7 +84,7 @@ class BurgerBuilder extends React.Component {
             ingredientRemoved={this.props.onIngredientRemoved}
             price={this.props.price}
             disabled={disabledInfo}
-            purchasable={this.state.purchasable}
+            purchasable={this.updatePurchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
           />
         </Aux>
