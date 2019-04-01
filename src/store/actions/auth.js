@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import { key } from "../../apiKey";
 
 export const authStart = () => {
   return {
@@ -7,10 +8,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = authData => {
+export const authSuccess = (token, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    authData: authData
+    idToken: token,
+    userId: userId
   };
 };
 
@@ -30,16 +32,18 @@ export const auth = (email, password, isSignUp) => {
       returnSecureToken: true
     };
     let url =
-      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyC52lk31kqJQWmIp2Js9Ntnm5nq8cmgfa8";
+      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
+      key;
     if (!isSignUp) {
       url =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyC52lk31kqJQWmIp2Js9Ntnm5nq8cmgfa8";
+        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" +
+        key;
     }
     axios
       .post(url, authData)
       .then(res => {
         console.log(res);
-        dispatch(authSuccess(res.data));
+        dispatch(authSuccess(res.data.idToken, res.data.localId));
       })
       .catch(err => {
         console.log(err);
