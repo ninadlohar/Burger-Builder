@@ -5,10 +5,26 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import reducer from "./store/reducer";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import burgerBuilderReducer from "./store/reducers/burgerBuilder";
 
-const store = createStore(reducer);
+const logger = store => {
+  return next => {
+    return action => {
+      console.log("[mw] dispactching", action);
+      const result = next(action);
+      console.log("[mw] next state", store.getState());
+      return result;
+    };
+  };
+};
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  burgerBuilderReducer,
+  composeEnhancers(applyMiddleware(logger))
+);
 
 const app = (
   <Provider store={store}>
@@ -20,7 +36,4 @@ const app = (
 
 ReactDOM.render(app, document.getElementById("root"));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
