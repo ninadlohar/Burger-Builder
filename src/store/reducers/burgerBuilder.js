@@ -1,4 +1,5 @@
 import * as Actions from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   ingredients: null,
@@ -16,24 +17,42 @@ const ING_PRICES = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.ADD_INGREDIENT: {
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-        },
+      const updatedIngredient = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+      };
+      const updatedIngredients = updateObject(
+        state.ingredients,
+        updatedIngredient
+      );
+      const updatedState = {
+        ingredients: updatedIngredients,
         totalPrice: state.totalPrice + ING_PRICES[action.ingredientName]
       };
+      return updateObject(state, updatedState);
     }
+    // case Actions.REMOVE_INGREDIENT: {
+    //   return {
+    //     ...state,
+    //     ingredients: {
+    //       ...state.ingredients,
+    //       [action.ingredientName]: state.ingredients[action.ingredientName] - 1
+    //     },
+    //     totalPrice: state.totalPrice - ING_PRICES[action.ingredientName]
+    //   };
+    // }
     case Actions.REMOVE_INGREDIENT: {
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-        },
+      const updatedIngredient = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] - 1
+      };
+      const updatedIngredients = updateObject(
+        state.ingredients,
+        updatedIngredient
+      );
+      const updatedState = {
+        ingredients: updatedIngredients,
         totalPrice: state.totalPrice - ING_PRICES[action.ingredientName]
       };
+      return updateObject(state, updatedState);
     }
     case Actions.SET_INGREDIENTS: {
       return {
