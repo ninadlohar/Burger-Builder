@@ -4,7 +4,8 @@ import { updateObject } from "../utility";
 const initialState = {
   ingredients: null,
   error: false,
-  totalPrice: 4
+  totalPrice: 4,
+  building: false
 };
 
 const ING_PRICES = {
@@ -26,7 +27,8 @@ const reducer = (state = initialState, action) => {
       );
       const updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + ING_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + ING_PRICES[action.ingredientName],
+        building: true
       };
       return updateObject(state, updatedState);
     }
@@ -50,7 +52,8 @@ const reducer = (state = initialState, action) => {
       );
       const updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice - ING_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice - ING_PRICES[action.ingredientName],
+        building: true
       };
       return updateObject(state, updatedState);
     }
@@ -64,7 +67,8 @@ const reducer = (state = initialState, action) => {
           meat: action.ingredients.meat
         },
         error: false,
-        totalPrice: 4
+        totalPrice: 4,
+        building: false
       };
     }
     case Actions.FETCH_INGREDIENTS_FAILED: {
