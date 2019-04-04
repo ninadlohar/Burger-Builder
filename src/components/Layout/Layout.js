@@ -7,9 +7,6 @@ import { connect } from "react-redux";
 
 const layout = props => {
   const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
-  state = {
-    sideDrawerClosed: true
-  };
   const sideDrawerClosedHandler = () => {
     setSideDrawerIsVisible(false);
   };
