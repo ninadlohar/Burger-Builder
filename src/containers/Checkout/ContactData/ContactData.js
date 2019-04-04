@@ -108,7 +108,7 @@ const contactData = props => {
     props.onOrderBurger(order, props.token);
   };
 
-  checkValidity = (value, rules) => {
+  const checkValidity = (value, rules) => {
     let isValid = true;
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
